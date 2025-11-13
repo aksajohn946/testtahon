@@ -12,12 +12,11 @@ pre:
 testDiscovery:
   type: raw
   mode: static
-  command: grep 'test name' testfolder/testfile.js | awk '{print$2}' | sed 's/name=//g' | sed 's/&gt;//g'
+  command: find . -name "*.test.js"
 
 testRunnerCommand: npm test -- --grep=$test
 
 retryOnFailure: true
-
 maxRetries: 1
 
 jobLabel: [nodejs-tests, linux, v1, autosplit]
