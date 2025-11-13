@@ -1,25 +1,30 @@
-version: 0.2
+version: 0.1
 
 runson: linux
 
+globalTimeout: 90
+testSuiteTimeout: 90
+testSuiteStep: 90
+
+autosplit: true
+
+retryOnFailure: true
+
+maxRetries: 1
 concurrency: 2
 
 pre:
-  # Commands to run before testing
   - npm install
 
-testSuite:
-  # Running your test command (replace with your script name if needed)
-  - npm test
+cacheKey: '{{ checksum "package.json" }}'
+cacheDirectories:
+  - node_modules
 
-retryOnFailure: true
-maxRetries: 2
+testDiscovery:
+  type: raw
+  mode: dynamic
+  command: grep -lr 'describe' specs/*.spec.js
 
-uploadArtefacts:
-  - name: TestReports
-    path:
-      - reports/**
+testRunnerCommand: npm test $test
 
-post:
-  # Any cleanup or post-processing commands
-  - echo "Test execution completed."
+jobLabel: [puppeteer-Mocha, linux, autosplit]
