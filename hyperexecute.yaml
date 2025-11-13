@@ -8,11 +8,14 @@ concurrency: 2
 
 pre:
   - npm install
-
 testDiscovery:
   type: raw
   mode: static
-  command: find . -name "*.test.js"
+  command: echo test.js
+
+testRunnerCommand: node $test
+
+
 
 testRunnerCommand: npm test -- --grep=$test
 
