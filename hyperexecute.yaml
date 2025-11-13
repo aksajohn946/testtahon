@@ -7,14 +7,34 @@ autosplit: true
 concurrency: 2
 
 pre:
-  - npm install
+  # Print environment for debugging
+  - echo "=== Environment ==="
+  - uname -a || true
+  - echo "User: $(whoami)" || true
+  - echo "Working dir: $(pwd)" || true
+  - echo "=== Node / NPM versions ==="
+  - node -v || echo "node: not found"
+  - npm -v || echo "npm: not found"
+  # Only install if package.json exists; try npm ci first for reproducible installs
+  - |
+    if [ -f package.json ]; then
+      echo "Found package.json — installing dependencies"
+      if command -v npm >/dev/null 2>&1; then
+        npm ci || npm install
+      else
+        echo "npm is not installed in the runner. Aborting install."
+        exit 1
+      fi
+    else
+      echo "No package.json found — skipping npm install"
+    fi
+
 testDiscovery:
   type: raw
   mode: static
   command: echo test.js
 
 testRunnerCommand: node $test
-
 
 retryOnFailure: true
 maxRetries: 1
