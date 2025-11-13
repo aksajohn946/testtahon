@@ -2,29 +2,22 @@ version: 0.1
 
 runson: linux
 
-globalTimeout: 90
-testSuiteTimeout: 90
-testSuiteStep: 90
-
 autosplit: true
 
-retryOnFailure: true
-
-maxRetries: 1
 concurrency: 2
 
 pre:
   - npm install
 
-cacheKey: '{{ checksum "package.json" }}'
-cacheDirectories:
-  - node_modules
-
 testDiscovery:
   type: raw
-  mode: dynamic
-  command: grep -lr 'describe' specs/*.spec.js
+  mode: static
+  command: grep 'test name' testfolder/testfile.js | awk '{print$2}' | sed 's/name=//g' | sed 's/&gt;//g'
 
-testRunnerCommand: npm test $test
+testRunnerCommand: npm test -- --grep=$test
 
-jobLabel: [puppeteer-Mocha, linux, autosplit]
+retryOnFailure: true
+
+maxRetries: 1
+
+jobLabel: [nodejs-tests, linux, v1, autosplit]
