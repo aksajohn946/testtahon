@@ -16,9 +16,6 @@ testDiscovery:
 testRunnerCommand: node $test
 
 
-
-testRunnerCommand: npm test -- --grep=$test
-
 retryOnFailure: true
 maxRetries: 1
 
