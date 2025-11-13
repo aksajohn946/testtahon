@@ -1,0 +1,37 @@
+version: 1.0
+
+config:
+  mode: remote          # Run tests on remote HyperExecute grid
+  runson: linux         # Specify OS where tests will run
+  concurrency: 3        # Number of parallel sessions
+
+tasks:
+  - name: Run tests with Node.js
+    commands:
+      - npm install     # Install dependencies
+      - npm test        # Run your test script (ensure package.json scripts.test is defined)
+    workingDirectory: .   # Directory to run commands from
+    environment:
+      NODE_ENV: test     # Set environment variables as required
+
+artifacts:
+  uploadArtifacts:
+    - path: reports      # Upload test reports back from this folder
+
+retryOnFailure: true     # Retry failed test up to maxRetries times
+maxRetries: 2
+
+cacheKey: package-lock.json   # cache dependencies for faster runs
+cacheDirectories:
+  - node_modules
+
+# Optional steps before all tasks start - global setup
+globalPre:
+  commands:
+    - echo "Setting up environment"
+
+# Optional steps after all tasks finish - cleanup
+globalPost:
+  commands:
+    - echo "Cleaning up"
+
