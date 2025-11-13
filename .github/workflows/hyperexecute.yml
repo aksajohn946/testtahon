@@ -1,0 +1,19 @@
+name: Run Tests with HyperExecute
+
+on: [push, pull_request]
+
+jobs:
+  hyperexecute-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download HyperExecute CLI
+        run: |
+          curl -L https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
+          chmod +x hyperexecute
+
+      - name: Run HyperExecute tests
+        run: |
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute.yaml
