@@ -1,22 +1,19 @@
-name: Node.js CI
+name: Run Tests with HyperExecute
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  hyperexecute-job:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      - name: Download HyperExecute CLI
+        run: |
+          curl -L https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
+          chmod +x hyperexecute
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run tests
-      run: npm test
+      - name: Run HyperExecute tests
+        run: |
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute.yaml
