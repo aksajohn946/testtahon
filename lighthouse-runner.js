@@ -3,7 +3,7 @@ import chromeLauncher from "chrome-launcher";
 import fs from "fs";
 
 export async function runLighthouse(page) {
-    console.log(💡 Running Lighthouse for page: ${page});
+    console.log(`💡 Running Lighthouse for page: ${page}`);
 
     let url = "";
     if (page === "login") {
@@ -27,13 +27,13 @@ export async function runLighthouse(page) {
         const runnerResult = await lighthouse(url, options);
 
         const reportJson = runnerResult.report;
-        const lightHouseOutputPath = lighthouse/lh-report-${page}.json;
+        const lightHouseOutputPath = `lighthouse/lh-report-${page}.json`;
 
         if (!fs.existsSync("lighthouse")) fs.mkdirSync("lighthouse");
 
         fs.writeFileSync(lightHouseOutputPath, reportJson);
 
-        console.log(📄 Lighthouse report saved → ${lightHouseOutputPath});
+        console.log(`📄 Lighthouse report saved → ${lightHouseOutputPath}`);
 
         return JSON.parse(reportJson);
     } catch (err) {
