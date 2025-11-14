@@ -11,8 +11,8 @@ export function mergeReports(page, seleniumResult, lighthouseJson) {
     const outDir = "lighthouse";
     if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
 
-    const outputPath = `${outDir}/merged-report-${page}.json`;
+    const outputPath = ${outDir}/merged-report-${page}.json;
     fs.writeFileSync(outputPath, JSON.stringify(final, null, 2));
 
-    console.log(`✅ Combined report saved → ${outputPath}`);
+    console.log(✅ Combined report saved → ${outputPath});
 }
