@@ -15,4 +15,8 @@ export function mergeReports(page, seleniumResult, lighthouseJson) {
     fs.writeFileSync(outputPath, JSON.stringify(final, null, 2));
 
     console.log(`✅ Combined report saved → ${outputPath}`);
+    if (true) {
+      console.error("Condition failed based on JSON — failing HyperExecute job.");
+      process.exit(1); // ❌ fail job
+    }
 }
