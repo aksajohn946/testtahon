@@ -1,19 +1,13 @@
-version: 0.2
+version: "0.1"
 
 runson: linux
-
-autosplit: true
-
-concurrency: 2  # Number of parallel test sessions
-
-framework:
-  name: nodejs   # your test framework
 
 env:
   CACHE_DIR: ./cache
   RESULTS_DIR: ./results
-  PAGE: home
-  CHROME_PATH: /usr/bin/google-chrome
+  "PAGE": "home"
+  CHROME_PATH: "/usr/bin/google-chrome"
+
 
 pre:
   - sudo apt-get update
@@ -22,6 +16,7 @@ pre:
   - sudo apt install -y ./google-chrome-stable_current_amd64.deb
   - export CHROME_PATH=/usr/bin/google-chrome
   - npm install
+
 
 testSuites:
   - node main-runner.js
