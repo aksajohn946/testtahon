@@ -20,6 +20,7 @@ pre:
 
 testSuites:
   - node main-runner.js
+   - python sample.py
 
 post:
   - echo "✅ All tests finished"
