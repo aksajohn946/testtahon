@@ -2,8 +2,12 @@ version: 0.2
 
 runson: linux
 
+autosplit: true
+
+concurrency: 2  # Number of parallel test sessions
+
 framework:
-  name: nodejs  # or jest, mocha, playwright, etc. depending on your test framework
+  name: nodejs   # your test framework
 
 env:
   CACHE_DIR: ./cache
