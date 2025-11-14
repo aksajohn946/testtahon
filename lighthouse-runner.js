@@ -4,8 +4,7 @@ console.log("DEBUG process.env.PAGE =", process.env.PAGE);
 
 import { runLoginTest } from "./test-login-lambdatest.js";
 import { runHomeTest } from "./test-home-lambdatest.js";
-import runLighthouse from "./lighthouse-runner.js";
-
+import { runLighthouse } from "./lighthouse-runner.js";
 import { mergeReports } from "./merge-reports.js";
 
 const PAGE = process.env.PAGE;
