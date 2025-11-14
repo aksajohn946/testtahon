@@ -55,4 +55,4 @@ jobs:
 
       - name: Run HyperExecute tests for PR
         run: |
-          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute-pr.yaml
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute_spa.yaml
