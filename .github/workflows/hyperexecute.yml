@@ -23,7 +23,7 @@ jobs:
 
       - name: Run HyperExecute tests for v1
         run: |
-          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute-v1.yaml
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute.yaml
 
   hyperexecute-v2:
     if: startsWith(github.ref, 'refs/tags/v2')
