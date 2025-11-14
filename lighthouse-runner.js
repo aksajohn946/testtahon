@@ -1,42 +1,45 @@
-import dotenv from "dotenv";
-dotenv.config();
-console.log("DEBUG process.env.PAGE =", process.env.PAGE);
+import lighthouse from "lighthouse";
+import chromeLauncher from "chrome-launcher";
+import fs from "fs";
 
-import { runLoginTest } from "./test-login-lambdatest.js";
-import { runHomeTest } from "./test-home-lambdatest.js";
-import { runLighthouse } from "./lighthouse-runner.js";
-import { mergeReports } from "./merge-reports.js";
+export async function runLighthouse(page) {
+    console.log(💡 Running Lighthouse for page: ${page});
 
-const PAGE = process.env.PAGE;
-
-console.log(`🚀 Starting Execution for PAGE=${PAGE}`);
-
-async function main() {
-    let seleniumResult = null;
-    let lighthouseJson = null;
-
-    // -----------------------------
-    // 1️⃣ Run Selenium for this page
-    // -----------------------------
-    if (PAGE === "login") {
-        seleniumResult = await runLoginTest();
-    } else if (PAGE === "home") {
-        seleniumResult = await runHomeTest();
+    let url = "";
+    if (page === "login") {
+        url = "https://demoapp-ashen.vercel.app/login/";
+    } else if (page === "home") {
+        url = "https://demoapp-ashen.vercel.app/";
     } else {
-        console.log("❌ Invalid PAGE value. Must be login or home.");
-        return;
+        console.log("❌ Invalid PAGE for Lighthouse");
+        return null;
     }
 
-    // -------------------------------------
-    // 2️⃣ Run Lighthouse for this same page
-    // -------------------------------------
-    lighthouseJson = await runLighthouse(PAGE);
+    const chrome = await chromeLauncher.launch({ chromeFlags: ["--headless"] });
+    const options = {
+        logLevel: "info",
+        output: "json",
+        onlyCategories: ["performance"],
+        port: chrome.port
+    };
 
-    // -----------------------------------------------------
-    // 3️⃣ Merge Selenium + Lighthouse into final JSON report
-    // -----------------------------------------------------
-    console.log(`🔄 Merging reports for: ${PAGE}`);
-    mergeReports(PAGE, seleniumResult, lighthouseJson);
+    try {
+        const runnerResult = await lighthouse(url, options);
+
+        const reportJson = runnerResult.report;
+        const lightHouseOutputPath = lighthouse/lh-report-${page}.json;
+
+        if (!fs.existsSync("lighthouse")) fs.mkdirSync("lighthouse");
+
+        fs.writeFileSync(lightHouseOutputPath, reportJson);
+
+        console.log(📄 Lighthouse report saved → ${lightHouseOutputPath});
+
+        return JSON.parse(reportJson);
+    } catch (err) {
+        console.log("❌ Lighthouse Failed:", err);
+        return null;
+    } finally {
+        await chrome.kill();
+    }
 }
-
-main();
