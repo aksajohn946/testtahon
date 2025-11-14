@@ -32,15 +32,15 @@ export async function runHomeTest() {
             const expectedButtons = ["Root", "Hello", "Data", "Compute", "Items"];
 
             for (let btnText of expectedButtons) {
-              const buttonLocator = By.xpath(//button[text()='${btnText}']);
+              const buttonLocator = By.xpath(`//button[text()='${btnText}']`);
 
               await driver.wait(
                 until.elementLocated(buttonLocator),
                 10000,
-                Button "${btnText}" was not found
+                `Button "${btnText}" was not found`
               );
 
-              console.log(✔ Button found: ${btnText});
+              console.log(`✔ Button found: ${btnText}`);
             }
 
         console.log("✅ Home Page Validation Passed");
