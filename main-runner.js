@@ -9,7 +9,7 @@ import { mergeReports } from "./merge-reports.js";
 
 const PAGE = process.env.PAGE;
 
-console.log(`🚀 Starting Execution for PAGE=${PAGE}`);
+console.log(🚀 Starting Execution for PAGE=${PAGE});
 
 async function main() {
     let seleniumResult = null;
@@ -35,7 +35,7 @@ async function main() {
     // -----------------------------------------------------
     // 3️⃣ Merge Selenium + Lighthouse into final JSON report
     // -----------------------------------------------------
-    console.log(`🔄 Merging reports for: ${PAGE}`);
+    console.log(🔄 Merging reports for: ${PAGE});
     mergeReports(PAGE, seleniumResult, lighthouseJson);
 }
 
