@@ -1,13 +1,15 @@
-version: "0.2"
+version: 0.2
 
 runson: linux
+
+framework:
+  name: nodejs  # or jest, mocha, playwright, etc. depending on your test framework
 
 env:
   CACHE_DIR: ./cache
   RESULTS_DIR: ./results
-  "PAGE": "home"
-  CHROME_PATH: "/usr/bin/google-chrome"
-
+  PAGE: home
+  CHROME_PATH: /usr/bin/google-chrome
 
 pre:
   - sudo apt-get update
@@ -16,7 +18,6 @@ pre:
   - sudo apt install -y ./google-chrome-stable_current_amd64.deb
   - export CHROME_PATH=/usr/bin/google-chrome
   - npm install
-
 
 testSuites:
   - node main-runner.js
